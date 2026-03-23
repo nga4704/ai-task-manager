@@ -1,32 +1,16 @@
-import { FaInbox, FaCalendarDay, FaPlus } from "react-icons/fa";
+export default function Sidebar({ activeTab, setActiveTab }) {
+  const itemClass = (tab) =>
+    `p-2 rounded cursor-pointer ${activeTab === tab ? 'bg-gray-200 font-semibold' : 'hover:bg-gray-100'}`
 
-export default function Sidebar() {
   return (
-    <div className="w-64 bg-gray-50 border-r h-screen p-6">
-      <h1 className="text-2xl font-bold text-red-500 mb-8">
-        Todoist
-      </h1>
-
-      <ul className="space-y-3">
-
-        <li className="flex items-center gap-3 p-2 rounded hover:bg-gray-200 cursor-pointer">
-          <FaInbox />
-          Inbox
-        </li>
-
-        <li className="flex items-center gap-3 p-2 rounded hover:bg-gray-200 cursor-pointer">
-          <FaCalendarDay />
-          Today
-        </li>
-
+    <div className="w-64 bg-white p-4 border-r">
+      <h2 className="text-xl font-bold text-red-500 mb-6">Todoist</h2>
+      <ul className="space-y-2">
+        <li className={itemClass('inbox')} onClick={() => setActiveTab('inbox')}>Inbox</li>
+        <li className={itemClass('today')} onClick={() => setActiveTab('today')}>Today</li>
+        <li className={itemClass('upcoming')} onClick={() => setActiveTab('upcoming')}>Upcoming</li>
+        <li className={itemClass('completed')} onClick={() => setActiveTab('completed')}>Completed</li>
       </ul>
-
-      <div className="mt-10">
-        <button className="flex items-center gap-2 text-red-500">
-          <FaPlus />
-          Add Project
-        </button>
-      </div>
     </div>
-  );
+  )
 }
