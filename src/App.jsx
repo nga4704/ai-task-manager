@@ -14,16 +14,19 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks))
   }, [tasks])
-const addTask = (text, date) => {
+
+  const addTask = (text, date, priority, note) => {
     if (!text.trim()) return
     setTasks([...tasks, {
       id: crypto.randomUUID(),
       text,
       completed: false,
-      date: date || null
+      date: date || null,
+      priority: priority || 'medium', // low | medium | high
+      note: note || '',
+      createdAt: Date.now()
     }])
   }
-
   const toggleTask = (id) => {
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t))
   }
@@ -31,7 +34,8 @@ const addTask = (text, date) => {
   const deleteTask = (id) => {
     setTasks(tasks.filter(t => t.id !== id))
   }
- const today = new Date().toISOString().split('T')[0]
+
+  const today = new Date().toISOString().split('T')[0]
 
   const filteredTasks = tasks.filter(task => {
     if (activeTab === 'inbox') return !task.date && !task.completed
@@ -42,12 +46,21 @@ const addTask = (text, date) => {
   })
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="flex-1 p-6">
-        <h1 className="text-2xl font-bold mb-4 capitalize">{activeTab}</h1>
-        <AddTask addTask={addTask} />
-        <TaskList tasks={filteredTasks} toggleTask={toggleTask} deleteTask={deleteTask} />
+    <div className="flex h-screen bg-[#f4f5f7] text-gray-800">
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} tasks={tasks} />
+
+      <div className="flex-1 flex flex-col">
+        {/* HEADER */}
+        <div className="bg-white px-6 py-4 border-b flex justify-between items-center">
+          <h1 className="text-xl font-semibold capitalize">{activeTab}</h1>
+          <div className="text-sm text-gray-400">{filteredTasks.length} tasks</div>
+        </div>
+
+        {/* CONTENT */}
+        <div className="p-6 overflow-auto">
+          <AddTask addTask={addTask} />
+          <TaskList tasks={filteredTasks} toggleTask={toggleTask} deleteTask={deleteTask} />
+        </div>
       </div>
     </div>
   )

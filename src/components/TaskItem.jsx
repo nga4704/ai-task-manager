@@ -1,19 +1,36 @@
 export default function TaskItem({ task, toggleTask, deleteTask }) {
+  const priorityColor = {
+    low: 'text-blue-500',
+    medium: 'text-yellow-500',
+    high: 'text-red-500'
+  }
+
   return (
-    <div className="group flex items-center justify-between p-3 bg-white rounded-lg hover:bg-gray-100 transition">
-      <div className="flex items-center gap-2">
+    <div className="group flex items-center justify-between bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition">
+      <div className="flex items-center gap-3">
         <input
           type="checkbox"
           checked={task.completed}
           onChange={() => toggleTask(task.id)}
-          className="w-4 h-4 accent-red-500"
+          className="w-5 h-5 accent-red-500"
         />
+
         <div>
-          <p className={task.completed ? 'line-through text-gray-400' : ''}>
+          <p className={`font-medium ${task.completed ? 'line-through text-gray-400' : ''}`}>
             {task.text}
           </p>
-          {task.date && (
-            <p className="text-xs text-gray-400">{task.date}</p>
+
+          <div className="flex gap-3 text-xs mt-1">
+            {task.date && <span>📅 {task.date}</span>}
+            {task.priority && (
+              <span className={priorityColor[task.priority]}>
+                ● {task.priority}
+              </span>
+            )}
+          </div>
+
+          {task.note && (
+            <p className="text-xs text-gray-400 mt-1">📝 {task.note}</p>
           )}
         </div>
       </div>
