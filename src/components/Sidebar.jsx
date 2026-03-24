@@ -31,13 +31,13 @@ export default function Sidebar({ activeTab, setActiveTab, tasks }) {
       </div>
 
       {/* IMAGE DECOR */}
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <img
           src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
           alt="illustration"
           className="w-32 mx-auto opacity-80"
         />
-      </div>
+      </div> */}
     </div>
   )
 }

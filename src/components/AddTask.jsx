@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function AddTask({ addTask }) {
+export default function AddTask({ addTask, onClose }) {
   const [text, setText] = useState('')
   const [date, setDate] = useState('')
   const [priority, setPriority] = useState('medium')
@@ -12,6 +12,7 @@ export default function AddTask({ addTask }) {
     setDate('')
     setPriority('medium')
     setNote('')
+    onClose() // 🔥 đóng form
   }
 
   return (
@@ -50,12 +51,21 @@ export default function AddTask({ addTask }) {
         className="w-full p-2 border rounded"
       />
 
-      <button
-        onClick={handleAdd}
-        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-      >
-        Add Task
-      </button>
+      <div className="flex gap-2">
+        <button
+          onClick={handleAdd}
+          className="bg-red-500 text-white px-4 py-2 rounded"
+        >
+          Add Task
+        </button>
+
+        <button
+          onClick={onClose}
+          className="text-gray-400 hover:text-gray-600"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   )
 }

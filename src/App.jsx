@@ -10,7 +10,7 @@ export default function App() {
   })
 
   const [activeTab, setActiveTab] = useState('inbox')
-
+  const [showAddTask, setShowAddTask] = useState(false)
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks))
   }, [tasks])
@@ -58,7 +58,19 @@ export default function App() {
 
         {/* CONTENT */}
         <div className="p-6 overflow-auto">
-          <AddTask addTask={addTask} />
+          {showAddTask ? (
+            <AddTask
+              addTask={addTask}
+              onClose={() => setShowAddTask(false)}
+            />
+          ) : (
+            <button
+              onClick={() => setShowAddTask(true)}
+              className="flex items-center gap-2 text-red-500 hover:bg-red-50 px-2 py-1 rounded"
+            >
+              + Add Task
+            </button>
+          )}
           <TaskList tasks={filteredTasks} toggleTask={toggleTask} deleteTask={deleteTask} />
         </div>
       </div>
